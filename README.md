@@ -1,18 +1,33 @@
-# 🎈 Blank app template
+# ⛴️ CCT111 A3: Toronto Island Ferry Fleet Replacement Justification
 
-A simple Streamlit app template for you to modify!
+![Toronto Island Electric Diesel Ferry](https://www.toronto.ca/wp-content/uploads/2024/06/915e-ferry-fleet-replacement-pax-rendering-banner.png)
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+The City of Toronto has allocated funding for constructing and delivering two fully electric ferries, with funding for additional vessels subject to approval. Our group aims to determine whether ticket sales and redemption trends over the past decade justify replacing the Toronto Island ferry fleet.
 
-### How to run it on your own machine
+## 🙋🏻‍♂️ Meet the team
+- Andrew Settino - Data Reporting & Analysis
+- Bianca Manlapaz - Presentation & Planning
+- Juan Gutierrez Moreno - Data Visualizations & Web Dev
 
-1. Install the requirements
+## 📊 The Dataset
+For our assignment, we have selected the [Toronto Island Ferry Ticket Counts](https://open.toronto.ca/dataset/toronto-island-ferry-ticket-counts/) dataset from the city of Toronto's Open Data Portal.
+
+This dataset provides near real-time information on Toronto Island ferry ticket sales and ticket redemptions. This Data set is maintained by Toronto's Department of Parks, Forest, and Recreation.
+
+## 🧑🏻‍💻 Check Out The Live Demo!
+Click [here](https://cct111-a3-group6.streamlit.app/) to visit the live demo website and view our data visualizations for yourself.
+
+## ▶️ Run The App Yourself!
+1. Clone the repo
+
+
+2. Install the neccessary requirements using your terminal
 
    ```
    $ pip install -r requirements.txt
    ```
 
-2. Run the app
+3. Run the app!
 
    ```
    $ streamlit run streamlit_app.py
