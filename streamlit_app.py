@@ -8,15 +8,6 @@ import numpy as np
 
 df = pd.read_csv('./Toronto Island Ferry Ticket Counts.csv')
 
-# Convert the Timestamp column to datetime
-df["Timestamp"] = pd.to_datetime(df["Timestamp"])
-
-# Using the Timestamp create new Year, Month, and Hour Columns
-df["Year"] = df["Timestamp"].dt.year
-df["Month"] = df["Timestamp"].dt.month
-df["Hour"] = df["Timestamp"].dt.hour
-
-
 # ---- INTRO SECTION ----
 st.title("Toronto Island Ferry Fleet Replacement Justification ⛴️ 🌊")
 
@@ -40,8 +31,20 @@ st.markdown(
     This Data set is maintained by Toronto's Department of Parks, Forest, and Recreation.
     
     This will help us understand the demand trends and make data based decisions on fleet replacement.
+    
+    Before we could perform an analysis we had to modify the original dataset to include Year, Month, and Hour columns.
+    Here is the code we used to achieve this.
     """
 )
+
+with st.echo():
+    # Convert the Timestamp column to datetime
+    df["Timestamp"] = pd.to_datetime(df["Timestamp"])
+
+    # Using the Timestamp create new Year, Month, and Hour Columns
+    df["Year"] = df["Timestamp"].dt.year
+    df["Month"] = df["Timestamp"].dt.month
+    df["Hour"] = df["Timestamp"].dt.hour
 
 df[["Timestamp", "Year", "Sales Count", "Redemption Count"]]
 
@@ -61,12 +64,13 @@ st.markdown(
     however in 2022 the counts returned to pre-pandemic levels.
     """
 )
+with st.echo():
 
-# Group by Year and sum Sales and Redemptions
-yearly_data = df.groupby("Year")[["Sales Count", "Redemption Count"]].sum().reset_index()
+    # Group by Year and sum Sales and Redemptions
+    yearly_data = df.groupby("Year")[["Sales Count", "Redemption Count"]].sum().reset_index()
 
-# Display line chart with a title
-st.line_chart(yearly_data.set_index("Year"))
+    # Display line chart with a title
+    st.line_chart(yearly_data.set_index("Year"))
 
 st.divider()
 
@@ -80,37 +84,38 @@ st.markdown(
     """
 )
 
-# Convert available years into a range for the slider
-min_year = int(df["Year"].min())  # Earliest year in dataset
-max_year = int(df["Year"].max())  # Latest year in dataset
+with st.echo():
+    # Convert available years into a range for the slider
+    min_year = int(df["Year"].min())  # Earliest year in dataset
+    max_year = int(df["Year"].max())  # Latest year in dataset
 
-# Define a dictionary to map month numbers to names
-month_map = {
-    1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
-    7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"
-}
+    # Define a dictionary to map month numbers to names
+    month_map = {
+        1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
+        7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"
+    }
 
-# Use a slider instead of a dropdown
-selected_year = st.slider("Select a Year", min_year, max_year, 2016)
+    # Use a slider instead of a dropdown
+    selected_year = st.slider("Select a Year", min_year, max_year, 2016)
 
-# Filter data for selected year
-filtered_df = df[df["Year"] == selected_year]
+    # Filter data for selected year
+    filtered_df = df[df["Year"] == selected_year]
 
-# Group by Month and sum Redemptions
-monthly_data = filtered_df.groupby("Month")[["Redemption Count"]].sum().reset_index()
+    # Group by Month and sum Redemptions
+    monthly_data = filtered_df.groupby("Month")[["Redemption Count"]].sum().reset_index()
 
-# Convert Month numbers to names using the dict
-monthly_data["Month"] = monthly_data["Month"].map(month_map)
+    # Convert Month numbers to names using the dict
+    monthly_data["Month"] = monthly_data["Month"].map(month_map)
 
-# Ensure the months are in the correct order
-month_order = list(month_map.values())  # ["Jan", "Feb", ..., "Dec"]
-monthly_data["Month"] = pd.Categorical(monthly_data["Month"], categories=month_order, ordered=True)
+    # Ensure the months are in the correct order
+    month_order = list(month_map.values())  # ["Jan", "Feb", ..., "Dec"]
+    monthly_data["Month"] = pd.Categorical(monthly_data["Month"], categories=month_order, ordered=True)
 
-# Sort by the newly defined order
-monthly_data = monthly_data.sort_values("Month")
+    # Sort by the newly defined order
+    monthly_data = monthly_data.sort_values("Month")
 
-# Display the monthly data in a line chart
-st.line_chart(monthly_data.set_index("Month"))
+    # Display the monthly data in a line chart
+    st.line_chart(monthly_data.set_index("Month"))
 
 st.divider()
 
@@ -123,6 +128,6 @@ st.markdown(
      additional vessels to minimize wait times and improve passenger experience.
     """
 )
-
-hourly_data = df.groupby("Hour")[["Redemption Count"]].sum().reset_index()
-st.bar_chart(hourly_data.set_index("Hour"))
+with st.echo():
+    hourly_data = df.groupby("Hour")[["Redemption Count"]].sum().reset_index()
+    st.bar_chart(hourly_data.set_index("Hour"))
